@@ -1,0 +1,15 @@
+<h1>Hello <%= @user.email %>,</h1>
+
+<p><%= @assignee.email %> is assigned you new task: <%= @task.title %> </p>
+
+<ul>
+  <li>
+    <strong>Title:</strong> <%= @task.title %><br>
+    <strong>Description:</strong> <%= @task.description || "N/A" %><br>
+    <strong>New Status:</strong> <%= @task.status %><br>
+    <strong>Due Date:</strong> <%= @task.due_date.strftime('%d-%m-%Y') %><br>
+    <strong>Updated By:</strong> <%= @user.email %>
+  </li>
+</ul>
+
+<p>Thanks,<br>Task Manager Team</p>

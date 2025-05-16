@@ -1,0 +1,5 @@
+pending_tasks_job:
+  class: PendingTasksWorker
+  queue: mailers
+  cron: '0 10 * * *' # Runs daily at 10:00 AM (UTC)
+  description: 'Send daily reminders for pending tasks with approaching due dates'

@@ -1,0 +1,14 @@
+<h1>Hello <%= @user.email %>,</h1>
+<p>This is a reminder about your pending task:</p>
+<ul>
+  <li>
+    <strong>Title:</strong> <%= @task.title %><br>
+    <strong>Description:</strong> <%= @task.description || "N/A" %><br>
+    <strong>Status:</strong> <%= @task.status %><br>
+    <strong>Due Date:</strong> <%= @task.due_date.strftime('%d-%m-%Y') %>
+  </li>
+</ul>
+
+<p>Please complete this task before the due date approaches.</p>
+
+<p>Thanks,<br>Task Manager Team</p>
