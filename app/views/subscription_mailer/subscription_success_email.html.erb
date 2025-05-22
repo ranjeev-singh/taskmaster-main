@@ -1,0 +1,7 @@
+<h1>Hello <%= @user.name || @user.email %>,</h1>
+
+<p>Your subscription of <strong><%= number_to_currency(@subscription.amount, unit: @subscription.currency.upcase) %></strong> was successful!</p>
+
+<p>Transaction ID: <%= @subscription.stripe_subscription_id %></p>
+
+<p>Thank you for subscribing.</p>

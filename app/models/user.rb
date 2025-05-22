@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :tasks, foreign_key: 'assigned_to_id'
+  has_many :subscriptions
 
   after_create :create_user_api_call
   after_update :update_user_api_call

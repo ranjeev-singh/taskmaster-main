@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       # }
       resources :tasks
       resources :users, only: [:index, :show, :destroy]
+      resources :subscriptions, only: [:create]
     end
   end
   mount ActionCable.server => '/cable'
