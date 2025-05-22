@@ -1,0 +1,7 @@
+<h1>Hello <%= @user.name || @user.email %>,</h1>
+
+<p>Unfortunately, your subscription of <strong><%= number_to_currency(@subscription.amount, unit: @subscription.currency.upcase) %></strong> failed.</p>
+
+<p>Reason: <%= @subscription.remarks %></p>
+
+<p>Please try again or contact support.</p>
