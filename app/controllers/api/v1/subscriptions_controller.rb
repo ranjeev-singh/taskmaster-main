@@ -5,6 +5,12 @@ module Api
       before_action :authenticate_user!
       after_action :verify_authorized
 
+      def index
+        @subscriptions = current_user.subscriptions
+        authorize @subscriptions
+        render json: @subscriptions
+      end
+
       def create
         authorize Subscription
         subscription = SubscriptionService.new(
@@ -15,6 +21,23 @@ module Api
         ).call
 
         render json: subscription, status: :created
+      end
+
+      def cancel_subscription
+        @subscription = Subscription.find_by(user_id: current_user.id, status: 'active')
+        authorize @subscription, :cancel_subscription?
+
+        unless @subscription
+          render json: { error: 'No active subscription found' }, status: :not_found
+          return
+        end
+
+        result = SubscriptionService.new(subscription: @subscription).cancel
+        if result.success?
+          render json: { message: 'Subscription canceled successfully', subscription: @subscription }, status: :ok
+        else
+          render json: { error: result.error }, status: :unprocessable_entity
+        end
       end
 
       private

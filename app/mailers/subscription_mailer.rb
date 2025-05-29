@@ -20,4 +20,10 @@ class SubscriptionMailer < ApplicationMailer
       subject: "Subscription failed"
     )
   end
+
+  def subscription_canceled_email(subscription)
+    @subscription = subscription
+    @user = subscription.user
+    mail(to: @user.email, subject: 'Subscription Canceled')
+  end
 end
