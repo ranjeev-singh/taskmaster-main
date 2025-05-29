@@ -20,7 +20,11 @@ Rails.application.routes.draw do
       # }
       resources :tasks
       resources :users, only: [:index, :show, :destroy]
-      resources :subscriptions, only: [:create]
+      resources :subscriptions, only: [:create] do
+        collection do
+          post 'cancel_subscription'
+        end
+      end
       resources :email_notifications, only: [:create]
     end
   end

@@ -44,6 +44,29 @@ class SubscriptionService
     end
   end
 
+  def cancel
+    return OpenStruct.new(success?: false, error: 'No subscription provided') unless subscription
+
+    begin
+      # Cancel the Stripe subscription
+      stripe_subscription = Stripe::Subscription.update(
+        subscription.stripe_subscription_id,
+        cancel_at_period_end: true
+      )
+
+      # Update local subscription
+      subscription.update!(
+        status: 'canceled',
+        remarks: subscription.remarks ? "#{subscription.remarks}; Canceled at #{Time.current}" : "Canceled at #{Time.current}"
+      )
+
+      SubscriptionMailer.subscription_canceled_email(subscription).deliver_later
+      OpenStruct.new(success?: true, subscription: subscription)
+    rescue Stripe::StripeError => e
+      OpenStruct.new(success?: false, error: "Failed to cancel subscription: #{e.message}")
+    end
+  end
+
   private
   def create_or_fetch_customer
     if @user.stripe_customer_id.present?

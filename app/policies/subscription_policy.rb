@@ -3,11 +3,7 @@ class SubscriptionPolicy < ApplicationPolicy
     user.admin?
   end
 
-  def index?
-    user.admin?
-  end
-
-  def show?
-    user.admin? || record.user_id == user.id
+  def cancel_subscription?
+    user.user? && record&.user_id == user.id
   end
 end
